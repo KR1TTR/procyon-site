@@ -1,0 +1,195 @@
+<!doctype html>
+<!--
+  Procyon website. This one file is the whole page; pictures are in images/.
+
+  How it works, in short:
+    <h2>Heading</h2>       a heading
+    <p>Some text</p>       a paragraph
+    <a href="URL">text</a> a link
+    <!- - ... - ->          a note like this one, never shown on the page
+
+  The colours and spacing are in the <style> section just below. To change
+  the words, scroll down to <body> and edit the text between the tags.
+  Things you'll change for each release are marked  ** UPDATE **.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Procyon</title>
+<meta name="description" content="Procyon: a friendly FT8 station for amateur radio. Free and open source, for Linux, Windows and macOS.">
+<link rel="icon" href="images/icon.svg" type="image/svg+xml">
+<style>
+  /* Colours: the same ones Procyon itself uses. */
+  :root {
+    --bg: #080c17;
+    --surface: #111829;
+    --border: #212b45;
+    --text: #e7ecf6;
+    --muted: #8592b0;
+    --rx: #3dd6c4;    /* teal */
+    --cq: #5fe08f;    /* green */
+    --me: #ffb547;    /* amber */
+    --info: #7ea6ff;  /* blue */
+    --mono: "JetBrains Mono", "SF Mono", ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace;
+    --sans: Inter, "SF Pro Text", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg) radial-gradient(1200px 600px at 50% -200px, #13204a, transparent);
+    background-repeat: no-repeat;
+    color: var(--text);
+    font: 17px/1.6 var(--sans);
+  }
+  a { color: var(--rx); }
+  a:hover { color: var(--text); }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
+
+  header { padding: 56px 0 24px; text-align: center; }
+  header .logo { width: min(420px, 85%); height: auto; }
+  .tagline { font-size: 1.35rem; color: var(--text); margin: 18px 0 6px; }
+  .sub { color: var(--muted); margin: 0 0 28px; }
+
+  .buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    display: inline-block; padding: 12px 22px; border-radius: 12px;
+    font-weight: 600; text-decoration: none; border: 1px solid var(--border);
+    color: var(--text); background: var(--surface);
+  }
+  .btn.main { background: var(--cq); color: #06140b; border-color: var(--cq); }
+  .btn:hover { filter: brightness(1.12); color: inherit; }
+  .btn.main:hover { color: #06140b; }
+
+  .shot {
+    display: block; width: 100%; height: auto; margin: 40px 0 8px;
+    border-radius: 14px; border: 1px solid var(--border);
+    box-shadow: 0 20px 60px #0008;
+  }
+  .caption { color: var(--muted); font-size: .9rem; text-align: center; margin: 0; }
+
+  section { padding: 44px 0 8px; }
+  h2 { font-size: 1.5rem; margin: 0 0 18px; }
+  h3 { font-size: 1.05rem; margin: 0 0 6px; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 14px; padding: 18px 20px;
+  }
+  .card p { margin: 0; color: var(--muted); }
+
+  table { width: 100%; border-collapse: collapse; }
+  td { padding: 12px 10px; border-top: 1px solid var(--border); vertical-align: top; }
+  td:first-child { font-weight: 600; white-space: nowrap; padding-right: 20px; }
+  td code, p code {
+    font-family: var(--mono); font-size: .88em; color: var(--rx);
+    background: #0c1222; padding: 1px 6px; border-radius: 6px;
+  }
+  .note { color: var(--muted); }
+  .warn { border-left: 3px solid var(--me); padding-left: 14px; color: var(--muted); }
+
+  footer {
+    margin-top: 56px; padding: 28px 0 40px; border-top: 1px solid var(--border);
+    color: var(--muted); font-size: .92rem; text-align: center;
+  }
+  .call { font-family: var(--mono); color: var(--me); }
+
+  /* Phones: stack the download table. */
+  @media (max-width: 640px) {
+    header { padding-top: 36px; }
+    td { display: block; border-top: none; padding: 2px 0; }
+    tr { display: block; border-top: 1px solid var(--border); padding: 12px 0; }
+  }
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <img class="logo" src="images/logo.svg" alt="Procyon">
+  <p class="tagline">A simpler, friendlier FT8 station.</p>
+  <!-- ** UPDATE ** the version and date for each release -->
+  <p class="sub">Version 0.9.26 · 23 October 2026 · Free and open source (GPLv3)</p>
+  <div class="buttons">
+    <a class="btn main" href="#download">Download</a>
+    <a class="btn" href="https://github.com/KR1TTR/procyon-ft8">Source code on GitHub</a>
+  </div>
+  <img class="shot" src="images/screenshot.jpg" alt="Procyon's main screen: waterfall at the top, band activity, QSO panel and logbook below" width="2160" height="1220">
+  <p class="caption">Procyon on 20 m (demo band: simulated stations)</p>
+</header>
+
+<main class="wrap">
+
+  <section>
+    <h2>What it does</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>WSJT-X's decoder, a modern screen</h3>
+        <p>Procyon uses WSJT-X's own decoder and encoder, so it hears exactly what WSJT-X hears. It just puts a cleaner, friendlier face on it.</p>
+      </div>
+      <div class="card">
+        <h3>Click and the QSO runs itself</h3>
+        <p>Click a station to answer it, or call CQ. Grid, report, roger, 73 and the log entry all happen automatically.</p>
+      </div>
+      <div class="card">
+        <h3>Never miss a caller</h3>
+        <p>Stations calling you are pinned to the top, with an alert, a Reply button and a chime.</p>
+      </div>
+      <div class="card">
+        <h3>POTA activations</h3>
+        <p>Enter your park(s), call CQ POTA, watch the counter reach 10, and get a log file per park, ready for pota.app.</p>
+      </div>
+      <div class="card">
+        <h3>Upload to QRZ and LoTW</h3>
+        <p>One click sends new QSOs. Nothing goes out until you click, so it works offline in the field too.</p>
+      </div>
+      <div class="card">
+        <h3>Works with your other tools</h3>
+        <p>GridTracker, JTAlert and loggers work as they do with WSJT-X. Run it from a tablet on your home network too.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="download">
+    <h2>Download</h2>
+    <p>You also need <a href="https://wsjt.sourceforge.io">WSJT-X</a> installed: Procyon uses its decoder. Close WSJT-X while Procyon runs.</p>
+    <table>
+      <tr>
+        <td>Linux Mint, Ubuntu, Debian, Raspberry Pi OS</td>
+        <td>The <code>.deb</code> file. Double-click it, then start <b>Procyon</b> from your menu.</td>
+      </tr>
+      <tr>
+        <td>Arch, Manjaro, EndeavourOS</td>
+        <td>The <code>-arch.tar.gz</code> file. Unpack it, then run <code>makepkg -si</code> inside.</td>
+      </tr>
+      <tr>
+        <td>Other Linux</td>
+        <td>The <code>-linux.zip</code> file. Unzip it and run <code>./setup.sh</code>.</td>
+      </tr>
+      <tr>
+        <td>Windows 10/11</td>
+        <td>The <code>-windows.zip</code> file. Right-click → <b>Extract All</b> first, then double-click <b>Procyon.bat</b>. Python is included.</td>
+      </tr>
+      <tr>
+        <td>macOS 11+</td>
+        <td>The <code>.dmg</code> file. Drag Procyon to Applications. The first time: System Settings → Privacy &amp; Security → <b>Open Anyway</b>.</td>
+      </tr>
+    </table>
+    <p style="margin-top:22px">
+      <a class="btn main" href="https://github.com/KR1TTR/procyon-ft8/releases/latest">Get the latest release</a>
+    </p>
+    <p class="note">Want to look around first? Start it in demo mode (<b>Procyon DEMO ONLY - no radio</b> on Windows, or <i>Settings → Advanced → Demo band</i>): a simulated band, nothing is transmitted.</p>
+    <p class="warn">Procyon is a hobby project, offered free and as is. Use at your own risk, and always keep an eye on your transmitter.</p>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <img src="images/icon.svg" alt="" width="40" height="40"><br>
+  Made by Justin Stapleton, <span class="call">KR1TTR</span>, with Claude Code · Columbus, Ohio<br>
+  <a href="https://github.com/KR1TTR/procyon-ft8">GitHub</a> ·
+  <a href="https://github.com/KR1TTR/procyon-ft8/blob/main/LICENSE">GPLv3 license</a>
+</footer>
+
+</body>
+</html>
