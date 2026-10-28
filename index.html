@@ -105,6 +105,11 @@
   form.contact .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   @media (max-width: 640px) { form.contact .row2 { grid-template-columns: 1fr; } }
   .hp { position: absolute; left: -9999px; }   /* a trap field for spam robots */
+  table.dl td:first-child { white-space: normal; width: 34%; }
+  .dl-btn { margin-top: 8px; padding: 9px 16px; font-size: .95rem; }
+  .dl-size { display: block; font-weight: 400; font-size: .8rem; opacity: .75; }
+  tr.mine td { background: #0c1222; }
+  tr.mine td:first-child { border-left: 3px solid var(--cq); }
 
   /* Phones: stack the download table. */
   @media (max-width: 640px) {
@@ -119,10 +124,12 @@
 <header class="wrap">
   <img class="logo" src="images/logo-tagline.svg" alt="Procyon - friendly digital ham software">
   <p class="tagline">FT8 and FT4 for your station, made simple and friendly.</p>
-  <!-- ** UPDATE ** the version and date for each release -->
-  <p class="sub"><span class="beta">PUBLIC BETA</span> Version 0.9.46 · 27 October 2026 · Free and open source (GPLv3)</p>
+  <!-- The version and date fill themselves in from GitHub (script at the end);
+       ** UPDATE ** this text only matters if GitHub can't be reached -->
+  <p class="sub"><span class="beta" id="betaPill">PUBLIC BETA</span> <span id="relVersion">Version 0.9.46 · 27 October 2026</span> · Free and open source (GPLv3)</p>
   <div class="buttons">
-    <a class="btn main" href="#download">Download</a>
+    <!-- Becomes "Download for Windows" (or Mac / Linux) for the visitor's computer -->
+    <a class="btn main" id="heroDownload" href="#download">Download</a>
     <a class="btn" href="guide.html">Setup guide</a>
   </div>
   <!-- ** UPDATE ** the ?v= after a new screenshot, so browsers fetch it fresh -->
@@ -172,32 +179,34 @@
   <section id="download">
     <h2>Download</h2>
     <p>You also need <a href="https://wsjt.sourceforge.io">WSJT-X</a> installed: Procyon uses its decoder. Close WSJT-X while Procyon runs.</p>
-    <table>
-      <tr>
-        <td>Windows 10/11</td>
-        <td>The <code>-windows-setup.exe</code> file. Double-click it (no administrator password needed), then start <b>Procyon</b> from the Start menu. If Windows says "Windows protected your PC", click <b>More info</b> → <b>Run anyway</b>.</td>
+    <!-- Each button gets the matching file of the newest release from GitHub
+         (data-file = how its name ends). Until then, or if GitHub can't be
+         reached, they open the release list instead. -->
+    <table class="dl">
+      <tr id="dl-windows">
+        <td>Windows 10/11<br><a class="btn main dl-btn" data-file="-windows-setup.exe" href="https://github.com/KR1TTR/procyon-ft8/releases">Download for Windows</a></td>
+        <td>Double-click the downloaded <code>-windows-setup.exe</code> (no administrator password needed), then start <b>Procyon</b> from the Start menu. If Windows says "Windows protected your PC", click <b>More info</b> → <b>Run anyway</b>.</td>
       </tr>
-      <tr>
-        <td>macOS 11+</td>
-        <td>The <code>.dmg</code> file. Drag Procyon to Applications. The first time: System Settings → Privacy &amp; Security → <b>Open Anyway</b>.</td>
+      <tr id="dl-mac">
+        <td>macOS 11+<br><a class="btn main dl-btn" data-file="-macos.dmg" href="https://github.com/KR1TTR/procyon-ft8/releases">Download for Mac</a></td>
+        <td>Open the <code>.dmg</code> and drag Procyon to Applications. The first time: System Settings → Privacy &amp; Security → <b>Open Anyway</b>.</td>
       </tr>
-      <tr>
-        <td>Linux Mint, Ubuntu, Debian, Raspberry Pi OS</td>
-        <td>The <code>.deb</code> file. Double-click it, then start <b>Procyon</b> from your menu.</td>
+      <tr id="dl-linux">
+        <td>Linux Mint, Ubuntu, Debian, Raspberry Pi OS<br><a class="btn main dl-btn" data-file="_all.deb" href="https://github.com/KR1TTR/procyon-ft8/releases">Download for Linux (.deb)</a></td>
+        <td>Double-click the <code>.deb</code> to install it, then start <b>Procyon</b> from your menu.</td>
       </tr>
-      <tr>
-        <td>Arch, Manjaro, EndeavourOS</td>
-        <td>The <code>-arch.tar.gz</code> file. Unpack it, then run <code>makepkg -si</code> inside.</td>
+      <tr id="dl-arch">
+        <td>Arch, Manjaro, EndeavourOS<br><a class="btn dl-btn" data-file="-arch.tar.gz" href="https://github.com/KR1TTR/procyon-ft8/releases">Download for Arch</a></td>
+        <td>Unpack the <code>-arch.tar.gz</code>, then run <code>makepkg -si</code> inside.</td>
       </tr>
-      <tr>
-        <td>Other Linux</td>
-        <td>The <code>-linux.zip</code> file. Unzip it and run <code>./setup.sh</code>.</td>
+      <tr id="dl-other">
+        <td>Other Linux<br><a class="btn dl-btn" data-file="-linux.zip" href="https://github.com/KR1TTR/procyon-ft8/releases">Download the Linux zip</a></td>
+        <td>Unzip the <code>-linux.zip</code> and run <code>./setup.sh</code>.</td>
       </tr>
     </table>
-    <p style="margin-top:22px">
-      <!-- "releases", not "releases/latest": GitHub's "latest" skips beta (pre-release) versions -->
-      <a class="btn main" href="https://github.com/KR1TTR/procyon-ft8/releases">Get the newest release</a>
-    </p>
+    <p class="note">Prefer GitHub? Every file, checksums and older versions are on the
+      <a href="https://github.com/KR1TTR/procyon-ft8/releases">releases page</a>, and the source code is in the
+      <a href="https://github.com/KR1TTR/procyon-ft8">repository</a>.</p>
     <p class="note">Want to look around first? Start it in demo mode (<b>Procyon DEMO ONLY - no radio</b> in the Windows Start menu, or <i>Settings → Advanced → Demo band</i>): a simulated band, nothing is transmitted.</p>
     <p class="warn">Procyon is a hobby project, offered free and as is. Use at your own risk, and always keep an eye on your transmitter.</p>
   </section>
@@ -249,6 +258,49 @@
     </script>
   </section>
 </main>
+
+<script>
+// Download buttons: ask GitHub for the newest release (beta versions included -
+// GitHub's own "latest" link skips those) and point each button at its file.
+// Without an answer the buttons keep opening the release list.
+(() => {
+  const RELEASES = "https://api.github.com/repos/KR1TTR/procyon-ft8/releases?per_page=10";
+  const ua = navigator.userAgent;
+  const os = /Windows/.test(ua) ? "windows"
+    : /iPhone|iPad|Android/.test(ua) ? ""
+    : /Macintosh|Mac OS X/.test(ua) ? "mac"
+    : /Linux|X11/.test(ua) ? "linux" : "";
+  const NAMES = { windows: "Windows", mac: "Mac", linux: "Linux" };
+  const hero = document.getElementById("heroDownload");
+  if (os) document.getElementById("dl-" + os).classList.add("mine");
+
+  fetch(RELEASES, { headers: { Accept: "application/vnd.github+json" } })
+    .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+    .then((list) => {
+      const rel = list.find((r) => !r.draft);
+      if (!rel) return;
+      const version = rel.tag_name.replace(/^v/, "");
+      const date = new Date(rel.published_at).toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" });
+      document.getElementById("relVersion").textContent = `Version ${version} · ${date}`;
+      document.getElementById("betaPill").hidden = !rel.prerelease;
+      for (const btn of document.querySelectorAll(".dl-btn")) {
+        const file = rel.assets.find((a) => a.name.endsWith(btn.dataset.file));
+        if (!file) continue;   // e.g. the Mac file, built a few minutes after a release
+        btn.href = file.browser_download_url;
+        btn.insertAdjacentHTML("beforeend", `<span class="dl-size">${version} · ${file.size >= 1048576 ? Math.round(file.size / 1048576) + " MB" : Math.max(1, Math.round(file.size / 1024)) + " KB"}</span>`);
+        btn.dataset.ready = "1";
+      }
+      if (os) {
+        const mine = document.querySelector(`#dl-${os} .dl-btn`);
+        if (mine.dataset.ready) {
+          hero.href = mine.href;
+          hero.textContent = `Download for ${NAMES[os]}`;
+        }
+      }
+    })
+    .catch(() => { /* buttons keep pointing at the release list */ });
+})();
+</script>
 
 </body>
 </html>
