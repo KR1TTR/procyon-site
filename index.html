@@ -16,9 +16,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Procyon</title>
-<meta name="description" content="Procyon: a friendly FT8 station for amateur radio. Free and open source, for Linux, Windows and macOS.">
-<link rel="icon" href="images/icon.svg" type="image/svg+xml">
+<!-- Tab name and icon differ from the Procyon program's ("Procyon" + plain raccoon) -->
+<title>Procyon – friendly FT8 and FT4 station software</title>
+<meta name="description" content="Procyon: friendly FT8 and FT4 station software for amateur radio. Free and open source, for Linux, Windows and macOS.">
+<link rel="icon" href="images/site-icon.svg" type="image/svg+xml">
 <style>
   /* Colours: the same ones Procyon itself uses. */
   :root {
@@ -89,11 +90,21 @@
   .note { color: var(--muted); }
   .warn { border-left: 3px solid var(--me); padding-left: 14px; color: var(--muted); }
 
-  footer {
-    margin-top: 56px; padding: 28px 0 40px; border-top: 1px solid var(--border);
-    color: var(--muted); font-size: .92rem; text-align: center;
-  }
   .call { font-family: var(--mono); color: var(--me); }
+  .beta {
+    display: inline-block; font: 700 .78rem var(--sans); letter-spacing: .08em;
+    color: #1a1200; background: var(--me); border-radius: 99px; padding: 2px 10px; vertical-align: 2px;
+  }
+  form.contact { display: grid; gap: 12px; max-width: 620px; }
+  form.contact label { display: grid; gap: 4px; color: var(--muted); font-size: .92rem; }
+  form.contact input, form.contact textarea {
+    font: inherit; color: var(--text); background: #0c1222;
+    border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px;
+  }
+  form.contact textarea { min-height: 130px; resize: vertical; }
+  form.contact .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 640px) { form.contact .row2 { grid-template-columns: 1fr; } }
+  .hp { position: absolute; left: -9999px; }   /* a trap field for spam robots */
 
   /* Phones: stack the download table. */
   @media (max-width: 640px) {
@@ -106,26 +117,30 @@
 <body>
 
 <header class="wrap">
-  <img class="logo" src="images/logo.svg" alt="Procyon">
-  <p class="tagline">A simpler, friendlier FT8 station.</p>
+  <img class="logo" src="images/logo-tagline.svg" alt="Procyon - friendly digital ham software">
+  <p class="tagline">FT8 and FT4 for your station, made simple and friendly.</p>
   <!-- ** UPDATE ** the version and date for each release -->
-  <p class="sub">Version 0.9.26 · 23 October 2026 · Free and open source (GPLv3)</p>
+  <p class="sub"><span class="beta">PUBLIC BETA</span> Version 0.9.46 · 27 October 2026 · Free and open source (GPLv3)</p>
   <div class="buttons">
     <a class="btn main" href="#download">Download</a>
-    <a class="btn" href="https://github.com/KR1TTR/procyon-ft8">Source code on GitHub</a>
+    <a class="btn" href="guide.html">Setup guide</a>
   </div>
-  <img class="shot" src="images/screenshot.jpg" alt="Procyon's main screen: waterfall at the top, band activity, QSO panel and logbook below" width="2160" height="1220">
+  <!-- ** UPDATE ** the ?v= after a new screenshot, so browsers fetch it fresh -->
+  <img class="shot" src="images/screenshot.jpg?v=0.9.46" alt="Procyon's main screen: waterfall at the top, band activity, QSO panel and logbook below" width="2160" height="1085">
   <p class="caption">Procyon on 20 m (demo band: simulated stations)</p>
 </header>
 
 <main class="wrap">
-
   <section>
     <h2>What it does</h2>
     <div class="grid">
       <div class="card">
         <h3>WSJT-X's decoder, a modern screen</h3>
-        <p>Procyon uses WSJT-X's own decoder and encoder, so it hears exactly what WSJT-X hears. It just puts a cleaner, friendlier face on it.</p>
+        <p>Procyon uses WSJT-X's own decoder, so it hears exactly what WSJT-X hears. It just puts a cleaner, friendlier face on it.</p>
+      </div>
+      <div class="card">
+        <h3>FT8 and FT4</h3>
+        <p>One switch next to the band. FT4's 7.5-second cycles make QSOs twice as fast, handy for contests. (FT4 is still a beta.)</p>
       </div>
       <div class="card">
         <h3>Click and the QSO runs itself</h3>
@@ -137,15 +152,19 @@
       </div>
       <div class="card">
         <h3>POTA activations</h3>
-        <p>Enter your park(s), call CQ POTA, watch the counter reach 10, and get a log file per park, ready for pota.app.</p>
+        <p>Enter your park(s), call CQ POTA, watch the counter reach 10, and get a log file per park, ready to upload to pota.app.</p>
       </div>
       <div class="card">
-        <h3>Upload to QRZ and LoTW</h3>
-        <p>One click sends new QSOs. Nothing goes out until you click, so it works offline in the field too.</p>
+        <h3>Your logbook, online</h3>
+        <p>One click sends new QSOs to QRZ or LoTW; nothing goes out until you click, so it works offline in the field. Bring your old QSOs in from QRZ or an ADIF file.</p>
+      </div>
+      <div class="card">
+        <h3>Easy to set up</h3>
+        <p>Import your WSJT-X settings, or let Procyon find your radio on its USB port. A built-in setup guide covers the rest.</p>
       </div>
       <div class="card">
         <h3>Works with your other tools</h3>
-        <p>GridTracker, JTAlert and loggers work as they do with WSJT-X. Run it from a tablet on your home network too.</p>
+        <p>GridTracker, JTAlert and loggers work as they do with WSJT-X. Run it from a tablet on your home network too, PIN-protected.</p>
       </div>
     </div>
   </section>
@@ -154,6 +173,14 @@
     <h2>Download</h2>
     <p>You also need <a href="https://wsjt.sourceforge.io">WSJT-X</a> installed: Procyon uses its decoder. Close WSJT-X while Procyon runs.</p>
     <table>
+      <tr>
+        <td>Windows 10/11</td>
+        <td>The <code>-windows-setup.exe</code> file. Double-click it (no administrator password needed), then start <b>Procyon</b> from the Start menu. If Windows says "Windows protected your PC", click <b>More info</b> → <b>Run anyway</b>.</td>
+      </tr>
+      <tr>
+        <td>macOS 11+</td>
+        <td>The <code>.dmg</code> file. Drag Procyon to Applications. The first time: System Settings → Privacy &amp; Security → <b>Open Anyway</b>.</td>
+      </tr>
       <tr>
         <td>Linux Mint, Ubuntu, Debian, Raspberry Pi OS</td>
         <td>The <code>.deb</code> file. Double-click it, then start <b>Procyon</b> from your menu.</td>
@@ -166,30 +193,62 @@
         <td>Other Linux</td>
         <td>The <code>-linux.zip</code> file. Unzip it and run <code>./setup.sh</code>.</td>
       </tr>
-      <tr>
-        <td>Windows 10/11</td>
-        <td>The <code>-windows.zip</code> file. Right-click → <b>Extract All</b> first, then double-click <b>Procyon.bat</b>. Python is included.</td>
-      </tr>
-      <tr>
-        <td>macOS 11+</td>
-        <td>The <code>.dmg</code> file. Drag Procyon to Applications. The first time: System Settings → Privacy &amp; Security → <b>Open Anyway</b>.</td>
-      </tr>
     </table>
     <p style="margin-top:22px">
-      <a class="btn main" href="https://github.com/KR1TTR/procyon-ft8/releases/latest">Get the latest release</a>
+      <!-- "releases", not "releases/latest": GitHub's "latest" skips beta (pre-release) versions -->
+      <a class="btn main" href="https://github.com/KR1TTR/procyon-ft8/releases">Get the newest release</a>
     </p>
-    <p class="note">Want to look around first? Start it in demo mode (<b>Procyon DEMO ONLY - no radio</b> on Windows, or <i>Settings → Advanced → Demo band</i>): a simulated band, nothing is transmitted.</p>
+    <p class="note">Want to look around first? Start it in demo mode (<b>Procyon DEMO ONLY - no radio</b> in the Windows Start menu, or <i>Settings → Advanced → Demo band</i>): a simulated band, nothing is transmitted.</p>
     <p class="warn">Procyon is a hobby project, offered free and as is. Use at your own risk, and always keep an eye on your transmitter.</p>
   </section>
 
-</main>
+  <section id="beta">
+    <h2>It's a beta: tell me what you find</h2>
+    <p>Procyon works and is used on the air every day, but it's still being developed. Things may change between versions, and you may find a bug or two. Reports help, and so do ideas, though Procyon stays a personal project: not every wish will make it in.</p>
+    <div class="buttons" style="justify-content:flex-start">
+      <a class="btn main" href="https://github.com/KR1TTR/procyon-ft8/issues/new/choose">Report a bug or share an idea</a>
+    </div>
+    <p class="note">Helpful in a report: your computer (Windows, Mac, Linux), radio and interface, Procyon's version (Settings → About Procyon), what you did and what happened. A photo of the screen is fine.</p>
+  </section>
 
-<footer class="wrap">
-  <img src="images/icon.svg" alt="" width="40" height="40"><br>
-  Made by Justin Stapleton, <span class="call">KR1TTR</span>, with Claude Code · Columbus, Ohio<br>
-  <a href="https://github.com/KR1TTR/procyon-ft8">GitHub</a> ·
-  <a href="https://github.com/KR1TTR/procyon-ft8/blob/main/LICENSE">GPLv3 license</a>
-</footer>
+  <section id="contact">
+    <h2>No GitHub account? Send a message.</h2>
+    <!-- Messages go through Formspree (formspree.io, free plan, about 50 a
+         month) and arrive by email at procyon@kr1ttr.radio. The address
+         itself never appears on this page. -->
+    <form class="contact" id="contactForm" action="https://formspree.io/f/mljjbydk" method="POST">
+      <div class="row2">
+        <label>Your name <input name="name" autocomplete="name"></label>
+        <label>Callsign <input name="callsign" autocomplete="off" style="text-transform:uppercase"></label>
+      </div>
+      <label>Email, if you'd like an answer <input type="email" name="email" autocomplete="email"></label>
+      <label>Message <textarea name="message" required></textarea></label>
+      <input type="hidden" name="_subject" value="Procyon website message">
+      <input class="hp" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div><button class="btn main" type="submit">Send</button> <span id="contactStatus" class="note"></span></div>
+    </form>
+    <script>
+    // Send without leaving the page, and say how it went. (Without JavaScript
+    // the form still works: Formspree shows its own "thanks" page.)
+    document.getElementById("contactForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const form = e.target, status = document.getElementById("contactStatus"), btn = form.querySelector("button");
+      btn.disabled = true;
+      status.textContent = "Sending…";
+      try {
+        const r = await fetch(form.action, { method: "POST", body: new FormData(form), headers: { Accept: "application/json" } });
+        if (!r.ok) throw new Error();
+        form.reset();
+        status.textContent = "Thanks, your message was sent.";
+      } catch {
+        status.textContent = "Sorry, that didn't go through. Please try again later.";
+      } finally {
+        btn.disabled = false;
+      }
+    });
+    </script>
+  </section>
+</main>
 
 </body>
 </html>

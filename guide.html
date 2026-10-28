@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Procyon setup guide</title>
+<link rel="icon" href="images/site-icon.svg">
+<style>
+  :root {
+    --bg: #080c17; --surface: #111829; --border: #212b45; --text: #e7ecf6; --muted: #8592b0;
+    --rx: #3dd6c4; --tx: #ff5b6e; --me: #ffb547; --cq: #5fe08f;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+         font: 15px/1.6 Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 820px; margin: 0 auto; padding: 28px 18px 60px; }
+  header { display: flex; align-items: center; gap: 14px; margin-bottom: 8px; }
+  header img { width: 52px; height: 52px; }
+  h1 { font-size: 28px; margin: 0; letter-spacing: -.01em; }
+  h2 { font-size: 20px; margin: 36px 0 10px; padding-top: 14px; border-top: 1px solid var(--border); }
+  h3 { font-size: 16px; margin: 22px 0 6px; color: var(--rx); }
+  p, li { color: #d3d9e8; }
+  a { color: var(--rx); }
+  code, kbd { font: 13px "JetBrains Mono", ui-monospace, Consolas, monospace; background: var(--surface);
+              border: 1px solid var(--border); border-radius: 5px; padding: 1px 6px; color: var(--text); }
+  pre { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px;
+        overflow-x: auto; font: 13px "JetBrains Mono", ui-monospace, Consolas, monospace; }
+  .lead { color: var(--muted); margin-top: 4px; }
+  .toc { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 12px 18px; margin: 20px 0; }
+  .toc ol { margin: 6px 0; padding-left: 20px; }
+  .note { border-left: 3px solid var(--me); background: #ffb54712; padding: 10px 14px; border-radius: 0 10px 10px 0; margin: 14px 0; }
+  .safety { border-left: 3px solid var(--tx); background: #ff5b6e12; padding: 10px 14px; border-radius: 0 10px 10px 0; margin: 14px 0; }
+  table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 14px; }
+  th, td { text-align: left; vertical-align: top; padding: 8px 10px; border-bottom: 1px solid var(--border); }
+  th { color: var(--muted); font-weight: 600; }
+  td:first-child { font-weight: 600; color: var(--text); width: 32%; }
+  .back { display: inline-block; margin-top: 30px; }
+  @media print {
+    :root { --bg: #fff; --surface: #f3f4f6; --border: #ccd; --text: #000; --muted: #444; --rx: #006a75; color-scheme: light; }
+    p, li { color: #111; }
+    .toc, .back { display: none; }
+    h2 { break-before: auto; }
+  }
+</style>
+</head>
+<body>
+<main>
+<header>
+  <img src="images/icon.svg" alt="">
+  <div><h1>Procyon setup guide</h1>
+  <p class="lead">From download to your first FT8 contact.</p></div>
+</header>
+
+<div class="toc"><b>Contents</b>
+<ol>
+  <li><a href="#need">What you need</a></li>
+  <li><a href="#install">Install Procyon and WSJT-X</a></li>
+  <li><a href="#clock">Set your clock</a></li>
+  <li><a href="#settings">First start: Settings</a></li>
+  <li><a href="#radios">Common radio setups</a></li>
+  <li><a href="#levels">Set the audio levels</a></li>
+  <li><a href="#first">Your first QSO</a></li>
+  <li><a href="#trouble">If something doesn't work</a></li>
+</ol></div>
+
+<div class="safety"><b>Before you transmit:</b> make your first tests into a dummy load or at low power,
+and only transmit with a valid amateur radio license, within your privileges. Procyon is provided as is,
+without warranty: use it at your own risk.</div>
+
+<h2 id="need">1. What you need</h2>
+<ul>
+  <li><b>A radio</b> that can work in a data or USB mode on the HF bands (or VHF).</li>
+  <li><b>An audio connection</b> between radio and computer. One of:
+    <ul>
+      <li>a <b>radio with built-in USB audio</b> (IC-7300, IC-705, FT-991A, FT-710, TS-590SG and many more): one USB cable carries sound and radio control;</li>
+      <li>an <b>interface</b> such as a <b>Digirig</b> or <b>SignaLink</b>, with its own sound card;</li>
+      <li>audio cables into the computer's own sound card (works, but an interface is easier).</li>
+    </ul></li>
+  <li><b>Radio control (CAT)</b>, recommended: a USB or serial cable so Procyon can set the frequency and key the transmitter.
+      Without it, Procyon can still work using the radio's VOX.</li>
+  <li><b>WSJT-X</b> installed (free). Procyon uses its FT8 decoder and encoder, and the Hamlib radio-control tools that come with it.
+      You don't need to run WSJT-X; in fact, close it while Procyon runs, since they can't share the radio and sound card.</li>
+  <li><b>An accurate clock</b>: FT8 needs your computer's time within about a second (see step 3).</li>
+</ul>
+
+<h2 id="install">2. Install Procyon and WSJT-X</h2>
+
+<h3>Linux Mint, Ubuntu, Debian, Raspberry Pi OS</h3>
+<ol>
+  <li>Install WSJT-X: from your software manager, or the <code>.deb</code> from the WSJT-X website
+      (<a href="https://wsjt.sourceforge.io">wsjt.sourceforge.io</a>).</li>
+  <li>Install Procyon: double-click <code>procyon_X.Y.Z_all.deb</code>, or in a terminal:
+<pre>sudo apt install ./procyon_X.Y.Z_all.deb</pre></li>
+  <li><b>Allow yourself to use serial ports</b> (needed for radio control on a fresh Linux install):
+<pre>sudo usermod -aG dialout $USER</pre>
+      then <b>log out and back in</b> (or restart). You only do this once per computer.</li>
+  <li>Start <b>Procyon</b> from your applications menu. It opens in your web browser.</li>
+</ol>
+
+<h3>Windows 10/11</h3>
+<ol>
+  <li>Install WSJT-X with its Windows installer from <a href="https://wsjt.sourceforge.io">wsjt.sourceforge.io</a>.</li>
+  <li>Double-click <code>Procyon-X.Y.Z-windows-setup.exe</code>. If Windows says "Windows protected your PC", click
+      <b>More info</b> then <b>Run anyway</b>. No administrator password is needed.</li>
+  <li>Start <b>Procyon</b> from the Start menu. It opens in your web browser; there's no window of its own.
+      Press its <b>Quit</b> button (top right) to close it. To update, run the newer setup file the same way -
+      your settings and logbook are kept.</li>
+</ol>
+<p><b>Procyon DEMO ONLY - no radio</b> (also in the Start menu) starts a simulated band for practice. For real operating, always use <b>Procyon</b>.
+To remove Procyon: Settings → Apps → Procyon → Uninstall.</p>
+<p>Prefer not to install? <code>Procyon-X.Y.Z-windows.zip</code> runs from any folder: right-click it, <b>Extract All</b>
+(it won't run from inside the zip), then double-click <b>Procyon.bat</b>. That way a small window stays open
+while Procyon runs; closing it stops Procyon.</p>
+
+<h3>macOS 11 or newer</h3>
+<ol>
+  <li>Open <code>Procyon-X.Y.Z-macos.dmg</code> and drag <b>Procyon</b> to Applications (or double-click the <code>.pkg</code>).</li>
+  <li>The first time, macOS blocks it because it isn't signed yet: open <b>System Settings → Privacy &amp; Security</b>,
+      scroll down and click <b>Open Anyway</b>.</li>
+  <li>If WSJT-X is missing, Procyon offers to install it for you.</li>
+</ol>
+
+<h3>Arch Linux and other Linux</h3>
+<p>Arch: unpack the <code>-arch.tar.gz</code> and run <code>makepkg -si</code> in its folder; install <code>wsjtx</code> and <code>hamlib</code> too.
+Other distributions: unzip the <code>-linux.zip</code> and run <code>./setup.sh</code>, which checks what's missing and adds a menu entry.
+On both, add yourself to the serial-port group as above (<code>dialout</code>; on Arch it's <code>uucp</code>).</p>
+
+<h2 id="clock">3. Set your clock</h2>
+<p>FT8 transmissions start on the second, every 15 seconds. If your clock is more than about one second off,
+other stations can't decode you, and you'll decode fewer of them.</p>
+<ul>
+  <li><b>Linux:</b> usually automatic. Check with <code>timedatectl</code>: it should say "System clock synchronized: yes".</li>
+  <li><b>Windows:</b> Settings → Time &amp; language → Date &amp; time → turn on "Set time automatically" and press <b>Sync now</b>.
+      Windows' own syncing can drift; many FT8 operators add a small time-sync program.</li>
+  <li><b>macOS:</b> System Settings → General → Date &amp; Time → "Set time and date automatically".</li>
+</ul>
+<p>Procyon's Band activity list shows each station's time offset (DT). If most stations show around +1 or more, your clock is off.</p>
+
+<h2 id="settings">4. First start: Settings</h2>
+<p>On the first start, Settings opens by itself (the gear icon at the top right brings it back).</p>
+<ol>
+  <li><b>Coming from WSJT-X?</b> Click <b>Import settings from WSJT-X</b> at the top. It fills in your callsign, grid,
+      radio, serial port, baud, PTT and sound card. Check it over, then press <b>Save</b>.</li>
+  <li><b>Station &amp; radio:</b> enter your <b>callsign</b> and <b>grid square</b>.</li>
+  <li>Turn on <b>Control my radio</b>, then press <b>Detect my radio</b>: Procyon asks each USB port which radio is there
+      (Yaesu, Kenwood, Elecraft and Icom radios answer) and fills in the model, port and baud.
+      If it can't tell, start typing your radio's name in the <b>Radio</b> box and pick it, then choose the serial port and baud.</li>
+  <li>Press <b>Test radio</b>. It only reads the frequency and mode; it never transmits.
+      "Radio answered: 14.074000 MHz" means radio control works.</li>
+  <li><b>Radio mode for FT8:</b> leave it on <b>Data</b> (DATA A on Elecraft, USB-D on Icom).</li>
+  <li><b>Transmit (PTT) by:</b> usually <b>CAT command to the radio</b>. See step 5 for interfaces that key the radio themselves.</li>
+  <li><b>Audio:</b> choose the radio's sound card for both <b>Input (from radio)</b> and <b>Output (to radio)</b>.
+      It's often called "USB Audio CODEC" (built-in radio audio, SignaLink) or "USB Audio Device" (Digirig).</li>
+  <li>Press <b>Save</b>.</li>
+</ol>
+<p class="note"><b>Demo band</b> (Settings → Advanced) lets you practice with simulated stations: nothing is transmitted,
+QSOs go to a separate practice log, and it's always off again when Procyon starts.</p>
+
+<h2 id="radios">5. Common radio setups</h2>
+
+<h3>Radio with built-in USB audio (IC-7300, IC-705, FT-991A, FT-710 and similar)</h3>
+<ul>
+  <li>One USB cable from radio to computer. Install the radio maker's USB driver first on Windows if it asks.</li>
+  <li>Audio in and out: the radio's sound card ("USB Audio CODEC").</li>
+  <li>PTT: <b>CAT</b>. Radio mode: <b>Data</b>.</li>
+  <li>On the radio, make sure data mode takes its audio from USB (on Icoms: the "DATA MOD" setting = USB).</li>
+</ul>
+
+<h3>Digirig</h3>
+<ul>
+  <li>The Digirig's USB cable carries both its sound card ("USB Audio Device") and a serial port for CAT
+      (shown as "CP210x", with "(e.g. Digirig)" in Procyon's list).</li>
+  <li>PTT: <b>CAT</b> if your cable carries radio control, or <b>RTS line on the serial port</b> if the Digirig keys the radio itself.</li>
+</ul>
+
+<h3>SignaLink USB</h3>
+<ul>
+  <li>The SignaLink has its own sound card ("USB Audio CODEC"): choose it for input and output.</li>
+  <li>It keys the radio by itself when it hears audio, so PTT can be <b>VOX</b>. If you also have a CAT cable,
+      <b>CAT</b> is more reliable: Procyon keys the radio directly and the SignaLink only carries audio.</li>
+  <li>Use the SignaLink's <b>TX</b> and <b>RX</b> knobs together with Procyon's levels (step 6); keep its <b>DLY</b> knob low.</li>
+</ul>
+
+<h3>Elecraft KX3 / KX2</h3>
+<ul>
+  <li>In DATA mode, set the radio's receive filter <b>wide</b> (about 3 kHz). A narrow filter shows up in Procyon
+      as a mostly white waterfall and hides every station outside a small window.</li>
+  <li>The KX3's AF gain sets the receive level when audio comes from its headphone jack.</li>
+</ul>
+
+<h2 id="levels">6. Set the audio levels</h2>
+<h3>Receive: the "RX audio" meter at the top</h3>
+<p>Hover over <b>RX audio</b> to see the level. Aim for about <b>-30 dB</b>. Adjust it with the <b>radio's</b> AF/volume
+or line-out setting (or the interface's RX knob), not in Procyon. Between about -40 and -15 decodes fine.</p>
+<h3>Transmit: the "TX audio drive" slider</h3>
+<div class="safety">Into a dummy load or at low power.</div>
+<ol>
+  <li>Press <b>Tune</b>: Procyon sends a steady tone and keys the radio.</li>
+  <li>Watch the radio's <b>ALC</b> meter and move <b>TX audio drive</b> until the ALC barely moves
+      (on many radios: no ALC, or the first few bars; follow your radio's manual for data modes).</li>
+  <li>Press <b>Tune</b> again to stop.</li>
+</ol>
+<p>Too much drive overdrives the transmitter and makes a wide, dirty signal. The radio's power setting, not the drive, sets your output power.</p>
+
+<h2 id="first">7. Your first QSO</h2>
+<ol>
+  <li>Pick a band from the frequency button at the top (20 m, 14.074 MHz, is a good start in daytime).</li>
+  <li>Watch <b>Band activity</b> fill in every 15 seconds. Stations calling CQ have a green bar.
+    (The <b>FT8 / FT4</b> switch beside the frequency picks the mode. Start with FT8: it's where most stations are.
+    FT4 runs faster 7.5-second cycles.)</li>
+  <li>To answer one, click its row. Procyon sets everything up and transmits in the right time slot.
+      Or press <b>Call CQ</b> and wait for someone to answer.</li>
+  <li>Follow the exchange in the <b>QSO</b> panel. When it completes, the contact is logged automatically.</li>
+  <li><b>Halt</b> stops a transmission straight away.</li>
+</ol>
+<p>Finished? Press <b>Quit</b> (top right), or just close Procyon's tab: transmitting stops after 10 seconds, and Procyon
+closes itself after a minute (you can switch that off in Settings → Advanced).</p>
+<p>Uploading: set up QRZ (and LoTW, if you use TQSL) under Settings → Logbook; an upload button appears next to Export ADIF.</p>
+
+<h2 id="trouble">8. If something doesn't work</h2>
+<table>
+<tr><th>What you see</th><th>What to try</th></tr>
+<tr><td>Decoding works but the radio doesn't respond (Test radio fails), on Linux</td>
+    <td>Add yourself to the serial-port group: <code>sudo usermod -aG dialout $USER</code>, then log out and back in.
+    On Ubuntu and Mint, a braille-display service (<code>brltty</code>) can grab USB serial adapters; if you don't use a braille display,
+    <code>sudo apt remove brltty</code> and unplug/replug the cable.</td></tr>
+<tr><td>"The serial port is in use by another program"</td><td>Close WSJT-X (or other radio software) and try again.</td></tr>
+<tr><td>Test radio says the radio didn't answer</td>
+    <td>Check the radio model, port and baud. The baud must match the radio's own CAT/RS232 menu setting. Try Detect my radio.</td></tr>
+<tr><td>No decodes at all</td>
+    <td>Check the input sound card, the RX audio level, that the radio is in the right mode and band, and your clock (step 3).</td></tr>
+<tr><td>The waterfall is mostly white</td><td>The radio's receive filter is set very narrow: widen it to about 3 kHz.</td></tr>
+<tr><td>Procyon won't transmit</td>
+    <td>Is the <b>Demo band</b> on (striped banner on the waterfall)? Check <b>Transmit (PTT) by</b>: with an interface that
+    keys the radio itself, use VOX, or CAT if you have a CAT cable. Check the output sound card.</td></tr>
+<tr><td>The radio keys but sends little or no power</td>
+    <td>Raise TX audio drive, the interface's TX knob, or the radio's data input level; check the radio is in DATA/USB mode.</td></tr>
+<tr><td>Stations don't decode me / I decode few stations</td><td>Check the clock (step 3).</td></tr>
+<tr><td>Strange stations "calling you" that don't exist</td>
+    <td>Decodes marked with a <b>?</b> were partly guessed by the decoder and are sometimes just noise; Procyon doesn't alert you for them.</td></tr>
+<tr><td>GridTracker or JTAlert don't see Procyon</td>
+    <td>Settings → Network → Companion apps: on, address 127.0.0.1, port 2237. It's paused in demo mode.</td></tr>
+<tr><td>Importing into another logging program creates duplicates</td>
+    <td>Settings → Advanced → Logbook export: "Export ADIF: only QSOs not exported before".</td></tr>
+<tr><td>Remote access from a phone or tablet doesn't connect</td>
+    <td>Guest and some ISP Wi-Fi networks keep devices apart ("client isolation"); try your home network or a wired connection.</td></tr>
+<tr><td>Procyon doesn't open when started from the menu (Linux)</td>
+    <td>A desktop notification says why. Procyon's messages are also saved in <code>~/.local/share/procyon/procyon.log</code>;
+    or run <code>procyon</code> in a terminal to watch them. To stop Procyon, use the <b>Quit</b> button (top right).</td></tr>
+</table>
+
+<a class="back" href="./">← Back to the Procyon website</a>
+</main>
+</body>
+</html>
