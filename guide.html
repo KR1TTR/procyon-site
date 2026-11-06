@@ -135,7 +135,14 @@ other stations can't decode you, and you'll decode fewer of them.</p>
       Windows' own syncing can drift; many FT8 operators add a small time-sync program.</li>
   <li><b>macOS:</b> System Settings → General → Date &amp; Time → "Set time and date automatically".</li>
 </ul>
-<p>Procyon's Band activity list shows each station's time offset (DT). If most stations show around +1 or more, your clock is off.</p>
+<p>Procyon checks this for you: the <b>Clock</b> light in the header compares your clock with the stations you hear
+(the middle value of their time offsets, DT, over the last two minutes - no internet needed). Green (within ±0.5 s) is fine;
+amber means it's drifting; red (a second or more) means set your clock. A small + of 0.1-0.3 s is normal.
+It needs about 8 stations before it shows a number.</p>
+<p><b>No internet in the field?</b> Settings → Advanced → <b>Clock</b> can keep Procyon in time with the band instead:
+<i>Sync to the band automatically</i>, or <i>when I click the Clock light</i>. It only shifts Procyon's own timing - your
+computer's clock isn't changed - and starts from zero each time Procyon starts. A clock more than about 2 seconds off
+decodes nothing to sync to, so set it roughly by hand first.</p>
 
 <h2 id="settings">4. First start: Settings</h2>
 <p>On the first start, Settings opens by itself (the gear icon at the top right brings it back).</p>
@@ -214,17 +221,22 @@ or line-out setting (or the interface's RX knob), not in Procyon. Between about 
   <li>Follow the exchange in the <b>QSO</b> panel. When it completes, the contact is logged automatically.</li>
   <li><b>Halt</b> stops a transmission straight away.</li>
 </ol>
+<p>Curious who a station is? Right-click its callsign (press and hold on a touch screen) and pick
+<b>Look up on QRZ</b>, or use the <b>QRZ ↗</b> link in the QSO panel. It opens their qrz.com page in a new tab.</p>
 <p>Finished? Press <b>Quit</b> (top right), or just close Procyon's tab: transmitting stops after 10 seconds, and Procyon
 closes itself after a minute (you can switch that off in Settings → Advanced).</p>
-<p>Uploading: set up QRZ (and LoTW, if you use TQSL) under Settings → Logbook; an upload button appears next to Export ADIF.</p>
+<p>Uploading: put your QRZ Logbook API key in Settings → Logbook; an upload button appears next to Export ADIF.</p>
+<p class="note">Everything else on the screen - filters, the exchange log, POTA, Settings tab by tab, keys - is explained in the <a href="user-guide.html">user guide</a>.</p>
 
 <h2 id="trouble">8. If something doesn't work</h2>
 <table>
 <tr><th>What you see</th><th>What to try</th></tr>
-<tr><td>Decoding works but the radio doesn't respond (Test radio fails), on Linux</td>
+<tr><td>Decoding works but the radio doesn't respond (Test radio fails), on Linux<br>
+    (Procyon may say your user isn't in the <code>dialout</code> group)</td>
     <td>Add yourself to the serial-port group: <code>sudo usermod -aG dialout $USER</code>, then log out and back in.
     On Ubuntu and Mint, a braille-display service (<code>brltty</code>) can grab USB serial adapters; if you don't use a braille display,
     <code>sudo apt remove brltty</code> and unplug/replug the cable.</td></tr>
+<tr><td>The Rig light says <b>Radio off?</b></td><td>Procyon can reach Hamlib, but the radio isn't answering it - usually the radio is switched off or its USB cable is unplugged. Switch it on: the light turns green again by itself. If it never does, check the radio model, serial port and baud in Settings.</td></tr>
 <tr><td>"The serial port is in use by another program"</td><td>Close WSJT-X (or other radio software) and try again.</td></tr>
 <tr><td>Test radio says the radio didn't answer</td>
     <td>Check the radio model, port and baud. The baud must match the radio's own CAT/RS232 menu setting. Try Detect my radio.</td></tr>
@@ -243,6 +255,8 @@ closes itself after a minute (you can switch that off in Settings → Advanced).
     <td>Settings → Network → Companion apps: on, address 127.0.0.1, port 2237. It's paused in demo mode.</td></tr>
 <tr><td>Importing into another logging program creates duplicates</td>
     <td>Settings → Advanced → Logbook export: "Export ADIF: only QSOs not exported before".</td></tr>
+<tr><td>The same QSO is in my log twice</td>
+    <td>Happens when a station missed your 73 and sent RR73 again later. Click the extra entry in the Logbook, then <b>Delete QSO</b>, then <b>Are you sure?</b> to confirm. If it was already uploaded to QRZ, delete it there too.</td></tr>
 <tr><td>Remote access from a phone or tablet doesn't connect</td>
     <td>Guest and some ISP Wi-Fi networks keep devices apart ("client isolation"); try your home network or a wired connection.</td></tr>
 <tr><td>Procyon doesn't open when started from the menu (Linux)</td>

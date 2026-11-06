@@ -68,6 +68,14 @@
     box-shadow: 0 20px 60px #0008;
   }
   .caption { color: var(--muted); font-size: .9rem; text-align: center; margin: 0; }
+  .shots { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+  .shots figure { margin: 0; }
+  .shots img {
+    display: block; width: 100%; height: auto; border-radius: 12px;
+    border: 1px solid var(--border); box-shadow: 0 12px 36px #0007;
+  }
+  .shots figcaption { color: var(--muted); font-size: .92rem; margin: 10px 2px 14px; }
+  .shots figcaption b { color: var(--text); }
 
   section { padding: 44px 0 8px; }
   h2 { font-size: 1.5rem; margin: 0 0 18px; }
@@ -126,15 +134,17 @@
   <p class="tagline">FT8 and FT4 for your station, made simple and friendly.</p>
   <!-- The version and date fill themselves in from GitHub (script at the end);
        ** UPDATE ** this text only matters if GitHub can't be reached -->
-  <p class="sub"><span class="beta" id="betaPill">PUBLIC BETA</span> <span id="relVersion">Version 0.9.46 · 27 October 2026</span> · Free and open source (GPLv3)</p>
+  <p class="sub"><span class="beta" id="betaPill">PUBLIC BETA</span> <span id="relVersion">Version 0.9.64 · 5 November 2026</span> · Free and open source (GPLv3)</p>
   <div class="buttons">
     <!-- Becomes "Download for Windows" (or Mac / Linux) for the visitor's computer -->
     <a class="btn main" id="heroDownload" href="#download">Download</a>
     <a class="btn" href="guide.html">Setup guide</a>
+    <a class="btn" href="user-guide.html">User guide</a>
   </div>
-  <!-- ** UPDATE ** the ?v= after a new screenshot, so browsers fetch it fresh -->
-  <img class="shot" src="images/screenshot.jpg?v=0.9.46" alt="Procyon's main screen: waterfall at the top, band activity, QSO panel and logbook below" width="2160" height="1085">
-  <p class="caption">Procyon on 20 m (demo band: simulated stations)</p>
+  <!-- ** UPDATE ** the ?v= after a new screenshot, so browsers fetch it fresh.
+       The screenshots are made with the demo band (simulated stations, demo call K1ABC). -->
+  <a href="images/screenshot-ft8.jpg?v=0.9.64"><img class="shot" src="images/screenshot-ft8.jpg?v=0.9.64" alt="Procyon's main screen during an FT8 QSO: waterfall at the top, band activity, QSO panel and logbook below" width="2400" height="1350"></a>
+  <p class="caption">An FT8 QSO on 20 m (demo band: simulated stations)</p>
 </header>
 
 <main class="wrap">
@@ -167,17 +177,33 @@
       </div>
       <div class="card">
         <h3>Your logbook, online</h3>
-        <p>One click sends new QSOs to QRZ or LoTW; nothing goes out until you click, so it works offline in the field. Bring your old QSOs in from QRZ or an ADIF file.</p>
+        <p>One click sends new QSOs to QRZ; nothing goes out until you click, so it works offline in the field. Bring your old QSOs in from QRZ or an ADIF file.</p>
       </div>
       <div class="card">
         <h3>Easy to set up</h3>
-        <p>Import your WSJT-X settings, or let Procyon find your radio on its USB port. A built-in setup guide covers the rest.</p>
+        <p>Import your WSJT-X settings, or let Procyon find your radio on its USB port. A built-in <a href="guide.html">setup guide</a> covers the rest, and the <a href="user-guide.html">user guide</a> explains every button and setting.</p>
       </div>
       <div class="card">
         <h3>Works with your other tools</h3>
         <p>GridTracker, JTAlert and loggers work as they do with WSJT-X. Run it from a tablet on your home network too, PIN-protected.</p>
       </div>
     </div>
+  </section>
+
+  <section id="screenshots">
+    <h2>A closer look</h2>
+    <!-- Click a picture to see it full size. -->
+    <div class="shots">
+      <figure>
+        <a href="images/screenshot-ft4.jpg?v=0.9.64"><img src="images/screenshot-ft4.jpg?v=0.9.64" alt="Procyon in FT4 mode, with its faster 7.5-second cycles" width="2400" height="1350" loading="lazy"></a>
+        <figcaption><b>FT4.</b> Same screen, one switch: QSOs in half the time.</figcaption>
+      </figure>
+      <figure>
+        <a href="images/screenshot-pota.jpg?v=0.9.64"><img src="images/screenshot-pota.jpg?v=0.9.64" alt="Procyon during a POTA activation: the POTA 3/10 counter in the header and park references in the logbook" width="2400" height="1350" loading="lazy"></a>
+        <figcaption><b>POTA.</b> Calling CQ POTA, with the counter on its way to 10 and the park in every log entry.</figcaption>
+      </figure>
+    </div>
+    <p class="caption">Click a picture to see it full size.</p>
   </section>
 
   <section id="download">

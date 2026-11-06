@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Procyon user guide</title>
+<link rel="icon" href="images/site-icon.svg">
+<style>
+  :root {
+    --bg: #080c17; --surface: #111829; --border: #212b45; --text: #e7ecf6; --muted: #8592b0;
+    --rx: #3dd6c4; --tx: #ff5b6e; --me: #ffb547; --cq: #5fe08f; --rpt: #d6a7ff;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+         font: 15px/1.6 Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 820px; margin: 0 auto; padding: 28px 18px 60px; }
+  header { display: flex; align-items: center; gap: 14px; margin-bottom: 8px; }
+  header img { width: 52px; height: 52px; }
+  h1 { font-size: 28px; margin: 0; letter-spacing: -.01em; }
+  h2 { font-size: 20px; margin: 36px 0 10px; padding-top: 14px; border-top: 1px solid var(--border); }
+  h3 { font-size: 16px; margin: 22px 0 6px; color: var(--rx); }
+  p, li { color: #d3d9e8; }
+  a { color: var(--rx); }
+  code, kbd { font: 13px "JetBrains Mono", ui-monospace, Consolas, monospace; background: var(--surface);
+              border: 1px solid var(--border); border-radius: 5px; padding: 1px 6px; color: var(--text); }
+  .lead { color: var(--muted); margin-top: 4px; }
+  .toc { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 12px 18px; margin: 20px 0; }
+  .toc ol { margin: 6px 0; padding-left: 20px; columns: 2; column-gap: 28px; }
+  .note { border-left: 3px solid var(--me); background: #ffb54712; padding: 10px 14px; border-radius: 0 10px 10px 0; margin: 14px 0; }
+  .safety { border-left: 3px solid var(--tx); background: #ff5b6e12; padding: 10px 14px; border-radius: 0 10px 10px 0; margin: 14px 0; }
+  table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 14px; }
+  th, td { text-align: left; vertical-align: top; padding: 8px 10px; border-bottom: 1px solid var(--border); }
+  th { color: var(--muted); font-weight: 600; }
+  td:first-child { font-weight: 600; color: var(--text); width: 30%; }
+  .sw { display: inline-block; width: .8em; height: .8em; border-radius: 3px; vertical-align: -.05em; margin-right: 4px; }
+  .back { display: inline-block; margin-top: 30px; }
+  @media (max-width: 560px) { .toc ol { columns: 1; } td:first-child { width: 38%; } }
+  @media print {
+    :root { --bg: #fff; --surface: #f3f4f6; --border: #ccd; --text: #000; --muted: #444; --rx: #006a75; color-scheme: light; }
+    p, li { color: #111; }
+    .toc, .back { display: none; }
+  }
+</style>
+</head>
+<body>
+<main>
+<header>
+  <img src="images/icon.svg" alt="">
+  <div><h1>Procyon user guide</h1>
+  <p class="lead">Every part of the screen, what it does, and how to use it.</p></div>
+</header>
+
+<p>New to Procyon? Start with the <a href="guide.html">setup guide</a>: it covers installing, connecting
+your radio and setting the audio levels. This guide picks up from there.</p>
+
+<div class="toc"><b>Contents</b>
+<ol>
+  <li><a href="#glance">The screen at a glance</a></li>
+  <li><a href="#header">The top bar</a></li>
+  <li><a href="#waterfall">Waterfall</a></li>
+  <li><a href="#activity">Band activity</a></li>
+  <li><a href="#qso">QSO panel</a></li>
+  <li><a href="#auto">How a QSO runs</a></li>
+  <li><a href="#logbook">Logbook</a></li>
+  <li><a href="#pota">POTA activations</a></li>
+  <li><a href="#settings">Settings, tab by tab</a></li>
+  <li><a href="#layout">Arranging the screen</a></li>
+  <li><a href="#others">Other devices and programs</a></li>
+  <li><a href="#keys">Keys and mouse</a></li>
+</ol></div>
+
+<h2 id="glance">1. The screen at a glance</h2>
+<ul>
+  <li><b>Top bar:</b> frequency and band, FT8/FT4, the clock and cycle timer, the QSO progress, and status lights.</li>
+  <li><b>Waterfall:</b> the audio from your radio, as a picture. Each signal is a stripe; decoded call signs are labelled on it.</li>
+  <li><b>Band activity:</b> every message decoded, cycle by cycle. Click a station to work it.</li>
+  <li><b>QSO:</b> the contact in progress, what Procyon will send next, and the transmit buttons.</li>
+  <li><b>Logbook:</b> your QSOs, logged automatically.</li>
+</ul>
+<p>Most buttons and lights explain themselves when you hover the mouse over them.</p>
+
+<h2 id="header">2. The top bar</h2>
+<table>
+<tr><th>Item</th><th>What it does</th></tr>
+<tr><td>Raccoon and "Procyon"</td><td>Opens the About card: version, credits, and links to both guides.</td></tr>
+<tr><td>Frequency button</td><td>Shows the dial frequency and band. Click it to pick a band; Procyon tunes the radio
+  (with radio control on) to that band's FT8 or FT4 frequency.</td></tr>
+<tr><td>FT8 / FT4</td><td>Picks the mode. <b>FT8</b> uses 15-second cycles and is where most stations are. <b>FT4</b> uses
+  7.5-second cycles for quicker QSOs, popular in contests. Switching in the middle of a QSO asks first, since it ends that QSO.</td></tr>
+<tr><td>UTC time</td><td>The time FT8 runs on (and the log uses).</td></tr>
+<tr><td>Clock light</td><td>Compares your clock with the stations you hear. Green is fine, amber is drifting, red means your
+  clock needs setting. With <i>band sync</i> on (Settings → Advanced → Clock) it shows how much Procyon is correcting,
+  e.g. "Synced +0.8 s". In the "when I click" setting, click it to sync.</td></tr>
+<tr><td>Cycle bar</td><td>Fills up during each cycle and says <b>RX</b> or <b>TX</b>. While you transmit it turns into a red
+  <b>ON AIR</b> sign with the seconds left.</td></tr>
+<tr><td>QSO progress</td><td>The station you're working and four steps: <b>Call, Report, Roger, Logged</b>.</td></tr>
+<tr><td>RX audio</td><td>The level of sound coming from your radio. Aim for about -30 dB (hover to see it); set it on the radio, not in Procyon.</td></tr>
+<tr><td>Rig</td><td>Radio control. Green: the radio is answering. <b>Radio off?</b>: the radio isn't answering (switched off or
+  unplugged). <b>Rig offline</b>: radio control isn't running. Hidden when radio control is switched off in Settings.</td></tr>
+<tr><td>Remote / Demo / POTA</td><td>Show only when they apply: you're on another device, the demo band is on, or a park
+  activation is running (click the POTA light for its details).</td></tr>
+<tr><td>Full screen</td><td>Fills the screen with Procyon. Press it again, or <kbd>Esc</kbd>, to leave.</td></tr>
+<tr><td>Gear</td><td>Settings (see section 9).</td></tr>
+<tr><td>Power button</td><td>Quit: stops Procyon cleanly, making sure the radio isn't left transmitting. Only on the computer running Procyon.</td></tr>
+</table>
+<p>Bars can appear under the top bar: when a new version is out, when an update has been installed and
+Procyon needs restarting, or when WSJT-X can't be found.</p>
+
+<h2 id="waterfall">3. Waterfall</h2>
+<ul>
+  <li><b>Click</b> to set your <b>receive</b> frequency (the teal RX marker).</li>
+  <li><b><kbd>Shift</kbd>+click</b>, or press and hold on a touch screen, to set your <b>transmit</b> frequency (the red TX
+      marker). A clear spot away from other signals gets you heard best.</li>
+  <li>Decoded call signs are labelled on their stripes: stations calling CQ first, then anyone calling you, then the rest.</li>
+  <li>The faint lines across it mark the start of each cycle, with its time.</li>
+  <li>The range shown (e.g. 300 to 3300 Hz) is set in Settings → Display → Waterfall. Its colors are in Settings → Experimental.</li>
+</ul>
+
+<h2 id="activity">4. Band activity</h2>
+<p>Each cycle's decodes appear under a heading with the time, the slot and the band. They appear as the decoder finds them, in
+order of frequency, with messages to you at the top. Each row shows:</p>
+<table>
+<tr><th>Column</th><th>Meaning</th></tr>
+<tr><td>Signal report</td><td>How strong the station is, in dB. Colored from weak to strong. -10 is a good signal, -20 is weak, -24 is about as low as FT8 goes.</td></tr>
+<tr><td>DT</td><td>How far off the station's timing is, in seconds. Near 0 is normal.</td></tr>
+<tr><td>Frequency</td><td>Where in the audio the station is, in Hz.</td></tr>
+<tr><td>Message</td><td>What was sent. Your own call is shown as an orange pill; Procyon's developer and testers get a small badge.</td></tr>
+<tr><td>Tags</td><td><b>NEW</b> (a station not in your log yet), <b>NEW BAND</b> (worked before, but not on this band),
+  <b>POTA</b> (activating a park), <b>?</b> (an uncertain decode - see below), then the country and distance.</td></tr>
+</table>
+<ul>
+  <li><span class="sw" style="background:var(--cq)"></span><b>Green bar:</b> a station calling CQ.
+      <span class="sw" style="background:var(--me)"></span><b>Amber:</b> a message to you, always shown first.</li>
+  <li><b>Click a row</b> (or its <b>Answer / Reply / Call</b> button) to work that station. Procyon fills in the QSO panel,
+      picks the right transmit slot and starts.</li>
+  <li><b>Right-click</b> a call sign (press and hold on a touch screen) for <b>Look up on QRZ</b>.</li>
+  <li><b>Filters:</b> <b>All</b>, <b>CQ</b> (only CQ calls), <b>New</b> (only stations you haven't worked), <b>My QSO</b>
+      (only your QSO and messages to you). Messages to you always show, whatever the filter.</li>
+  <li><b>Custom filter</b> (the box underneath): type part of a call, a grid, <code>POTA</code>, a country (<code>germ</code>)
+      or a continent (<code>EU</code>); separate several with commas. The funnel button turns it off without erasing it.</li>
+  <li><b>Calling you:</b> when a new station calls you, a box appears above the list with a <b>Reply</b> button, a chime plays,
+      and the browser tab's title changes, so you notice even in another window. <b>✕</b> dismisses it.</li>
+  <li><b>Uncertain decodes (?)</b> look faint. The decoder partly guessed them, and now and then it turns noise into a call that was
+      never sent. Procyon never alerts you for one or answers it by itself; wait for a clean decode.</li>
+  <li>After a band change, older cycles stay below a "Changed to ..." line, dimmed and tagged with their band.</li>
+  <li><b>Clear</b> empties the list (on every connected device).</li>
+</ul>
+
+<h2 id="qso">5. QSO panel</h2>
+<table>
+<tr><th>Part</th><th>What it does</th></tr>
+<tr><td>Call and grid boxes</td><td>The station you're working. Filled in when you click a station; you can also type a call yourself.</td></tr>
+<tr><td>Station details</td><td>Country, distance and direction, plus a <b>QRZ ↗</b> link.</td></tr>
+<tr><td>Sent / Received</td><td>The signal reports exchanged.</td></tr>
+<tr><td>Log note</td><td>An optional comment for this QSO's log entry (name, rig, conditions). You can still type it after the QSO is logged.</td></tr>
+<tr><td>Next transmission</td><td>The message Procyon will send next, with a bar showing it going out.</td></tr>
+<tr><td>Exchange</td><td>The QSO so far, cycle by cycle: <span style="color:var(--tx)">what you sent</span> and
+  <span style="color:var(--rx)">what you heard back</span>. It notes <i>No reply heard</i>, <i>repeat</i> (they sent the same
+  thing again, so they probably didn't copy you), and <i>busy</i> (they're working someone else). Its <b>Clear</b> only clears this list.</td></tr>
+<tr><td>All messages</td><td>Click to open the six standard messages (Tx1 to Tx6). You can edit one, or click its button to send it next.</td></tr>
+<tr><td>Call CQ</td><td>Starts calling CQ. The first station to answer is worked automatically.</td></tr>
+<tr><td>Enable TX</td><td>Lets Procyon transmit. It switches on by itself when you answer a station or call CQ, and off when the QSO is done.</td></tr>
+<tr><td>Halt</td><td>Stops transmitting <b>now</b>. <kbd>Esc</kbd> does the same.</td></tr>
+<tr><td>Transmit in</td><td><b>:00 / :30</b> or <b>:15 / :45</b> (in FT4, the matching 7.5-second slots). Answering a station picks the right one for you.</td></tr>
+<tr><td>TX offset</td><td>Your transmit frequency in the audio, in Hz (the red TX marker on the waterfall).</td></tr>
+<tr><td>Radio power</td><td>Your radio's output in watts, written into each QSO in the log. It doesn't change the radio.</td></tr>
+<tr><td>TX audio drive</td><td>How loud the audio to the radio is. Set it once with <b>Tune</b> while you watch the radio's ALC (see the setup guide).</td></tr>
+<tr><td>Tune</td><td>Sends a steady tone so you can check power, SWR and ALC. Press again to stop.</td></tr>
+<tr><td>POTA</td><td>Start or manage a park activation (section 8).</td></tr>
+<tr><td>Clear</td><td>Forgets the station you were working.</td></tr>
+</table>
+
+<h2 id="auto">6. How a QSO runs</h2>
+<p>Once you click a station or call CQ, Procyon runs the whole exchange for you:</p>
+<ol>
+  <li>call (with your grid),</li>
+  <li>signal report,</li>
+  <li>roger and report,</li>
+  <li>RR73 or 73.</li>
+</ol>
+<p>When the QSO is complete it's logged, and transmitting switches off. If the other station sends something again,
+Procyon answers with the right message; if they go quiet, it keeps calling.</p>
+<div class="safety">Transmitting stops by itself after <b>6 minutes</b> with no reply, and <b>10 seconds</b> after you close
+every Procyon tab. <b>Halt</b> or <kbd>Esc</kbd> always stops it straight away.</div>
+
+<h2 id="logbook">7. Logbook</h2>
+<ul>
+  <li>Each QSO shows the call, grid, band, power, reports, country, distance, date and time, and your comment.
+      Small tags show where it has been uploaded and, for POTA, the park.</li>
+  <li><b>Click an entry</b> to change its comment or power, or to <b>Delete QSO</b> (then <b>Are you sure?</b> to confirm). A copy of the
+      log from before the change is kept.</li>
+  <li><b>Export ADIF</b> downloads your log in the standard format every logging program reads.
+      (Settings → Advanced can make it export only the QSOs you haven't exported before.)</li>
+  <li><b>Upload to QRZ</b> appears once your QRZ key is set (Settings → Logbook). It shows how many QSOs are waiting, and sends them
+      only when you click. QSOs logged without internet wait until you do.</li>
+  <li>The <b>NEW</b> and <b>NEW BAND</b> tags in Band activity come from this log. To include QSOs you made before Procyon, import them
+      (Settings → Advanced → Logbook import).</li>
+  <li>With the demo band on, the logbook says <b>Demo log</b>: simulated QSOs go into a separate practice log that can't be uploaded.</li>
+</ul>
+
+<h2 id="pota">8. POTA activations</h2>
+<ol>
+  <li>Press <b>POTA</b> in the QSO panel and enter your park (several, separated by commas, for a 2-fer or more).
+      The grid and state are optional; leave the grid empty to use your home grid.</li>
+  <li>Press <b>Start activation</b>. Your CQ becomes <code>CQ POTA</code>, every QSO is tagged with the park, and the
+      <b>POTA</b> light in the top bar counts toward the 10 QSOs an activation needs (per UTC day).</li>
+  <li>A log file for each park is saved as you go, named the way pota.app expects. The POTA window has download links.
+      Procyon never uploads to POTA: sign in at pota.app and upload the files yourself.</li>
+  <li>Press <b>End activation</b> when you're done. An activation survives restarting Procyon.</li>
+</ol>
+<p>Hunting? Stations calling <code>CQ POTA</code> get a green POTA tag in Band activity; type <code>POTA</code> in the custom filter to see only them.</p>
+
+<h2 id="settings">9. Settings, tab by tab</h2>
+<p>The gear icon opens Settings. Press <b>Save</b> to keep changes (a few, marked "this device", apply straight away).
+<b>Import settings from WSJT-X</b> at the top copies your station and radio setup from WSJT-X.</p>
+<table>
+<tr><th>Tab</th><th>What's there</th></tr>
+<tr><td>Station &amp; radio</td><td>Callsign and grid. Radio control: <b>Detect my radio</b>, <b>Test radio</b> (never transmits), the radio model,
+  serial port, baud, the radio mode for FT8 (Data recommended) and how to key the transmitter (PTT).</td></tr>
+<tr><td>Audio</td><td>The sound card the radio's audio comes in on, and the one it goes out on.</td></tr>
+<tr><td>Logbook</td><td>Add signal reports to log comments. Your QRZ Logbook API key, with <b>Test key</b> and <b>Remove key</b>.</td></tr>
+<tr><td>Display</td><td>Team badges on or off; distances in miles or kilometers (automatic follows your callsign's country);
+  the chime for stations calling you; the waterfall's range; the panel layout.</td></tr>
+<tr><td>Network</td><td>Sending decodes and QSOs to GridTracker, JTAlert and loggers, and whether they may control Procyon.
+  Remote access from other devices, with a PIN.</td></tr>
+<tr><td>Advanced</td><td>Demo band. Clock: follow the computer, or sync to the band automatically or when you click the Clock light.
+  Decoding depth. Stop Procyon when its page is closed. New-version messages. Exporting only new QSOs.
+  Importing QSOs from QRZ or an ADIF file. Radio control connection details.</td></tr>
+<tr><td>Experimental</td><td>Things being tried out: color palettes (Night sky, Classic, Antique radio, Campfire),
+  background textures, and waterfall colors (Lightning, Classic, Tube glow, Ember). Each device remembers its own choice.</td></tr>
+</table>
+<p class="note"><b>About Procyon</b>, at the bottom of Settings, shows the version and credits.</p>
+
+<h2 id="layout">10. Arranging the screen</h2>
+<p>Settings → Display → Layout picks how the panels sit on this device: <b>Automatic</b> (side by side on wide windows,
+stacked on narrow ones), <b>Side by side</b>, or <b>Stacked</b> (good for phones and portrait monitors).</p>
+<ul>
+  <li><b>Side by side:</b> drag a panel by the grip next to its title to move it to another column; drag the gap between
+      two panels to make one wider.</li>
+  <li><b>Stacked:</b> use each panel's <b>▲▼</b> buttons to reorder them; drag the bottom edge of Band activity or the Logbook to resize.</li>
+  <li>Double-click a resize handle to undo it, or press <b>Reset panel layout</b>. Each device remembers its own layout.</li>
+</ul>
+
+<h2 id="others">11. Other devices and programs</h2>
+<h3>A tablet, phone or laptop</h3>
+<p>Turn on <b>Remote access</b> (Settings → Network) and choose a PIN. Settings then lists the address to open on the other device,
+on the same home network. You can operate fully from there; a few things (like the PIN, the QRZ key and Quit) can only be changed
+on the computer running Procyon.</p>
+<h3>GridTracker, JTAlert and loggers</h3>
+<p>Procyon talks to them the way WSJT-X does (Settings → Network → Companion apps). With <i>Let them control Procyon</i> on,
+clicking a station in GridTracker answers it in Procyon. This is paused while the demo band is on.</p>
+
+<h2 id="keys">12. Keys and mouse</h2>
+<table>
+<tr><th>Do this</th><th>To</th></tr>
+<tr><td><kbd>Esc</kbd></td><td>Stop transmitting now (when no window is open on top). In a box or menu, <kbd>Esc</kbd> just closes it.</td></tr>
+<tr><td>Click a Band activity row</td><td>Work that station.</td></tr>
+<tr><td>Right-click a call sign<br>(touch: press and hold)</td><td>Look it up on QRZ.</td></tr>
+<tr><td>Click the waterfall</td><td>Set the receive frequency.</td></tr>
+<tr><td><kbd>Shift</kbd>+click the waterfall<br>(touch: press and hold)</td><td>Set the transmit frequency.</td></tr>
+<tr><td>Click a logbook entry</td><td>Edit or delete it. <kbd>Enter</kbd> saves, <kbd>Esc</kbd> cancels.</td></tr>
+<tr><td>Double-click a resize handle</td><td>Undo that panel's size.</td></tr>
+<tr><td>Arrow keys on the Settings tabs</td><td>Move between tabs.</td></tr>
+</table>
+
+<a class="back" href="./">← Back to the Procyon website</a>
+</main>
+</body>
+</html>
