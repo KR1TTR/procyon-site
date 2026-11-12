@@ -118,6 +118,11 @@
   .dl-size { display: block; font-weight: 400; font-size: .8rem; opacity: .75; }
   tr.mine td { background: #0c1222; }
   tr.mine td:first-child { border-left: 3px solid var(--cq); }
+  footer.credits { border-top: 1px solid var(--border); margin-top: 48px; padding: 22px 20px 40px;
+    color: var(--muted); font-size: .85rem; line-height: 1.55; }
+  footer.credits p { margin: 0 0 8px; }
+  footer.credits b { color: var(--text); font-weight: 600; }
+  footer.credits ul { margin: 0 0 8px; padding-left: 18px; }
 
   /* Phones: stack the download table. */
   @media (max-width: 640px) {
@@ -288,6 +293,17 @@
     </script>
   </section>
 </main>
+
+<footer class="wrap credits">
+  <p>Created by <b>Justin Stapleton</b> with <b>Claude Code</b> (Claude Opus 5.5).</p>
+  <p>Procyon builds on:</p>
+  <ul>
+    <li><a href="https://wsjt.sourceforge.io">WSJT-X</a> by Joe Taylor K1JT, Steve Franke K9AN and the WSJT Development Group: the FT8 and FT4 modes, their message formats, and the <code>jt9</code> decoder</li>
+    <li><a href="https://hamlib.github.io">Hamlib</a>: radio control</li>
+    <li><a href="https://www.country-files.com">Big CTY</a> by Jim Reisert AD1C: country lookups</li>
+  </ul>
+  <p>Free software under the GNU General Public License v3.</p>
+</footer>
 
 <script>
 // Download buttons: ask GitHub for the newest release (beta versions included -
